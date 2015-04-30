@@ -1,49 +1,3 @@
-js-seed [![Build Status](https://travis-ci.org/jseto/js-seed.svg?branch=master)](https://travis-ci.org/jseto/js-seed)
-============
-
-__A starter project for Angular.__
-
-Based on [Angular][angular]'s [angular-seed](http://github.com/angular/angular-seed)  but using gulp.
-    
-This project is an application skeleton for a basic [AngularJS](http://angularjs.org/) web app. Additionally it takes benefit form [Bootstrap][bootstrap] responsive framework. It is ready for [Travis CI][travis] continuous integration platform.
-Now suports [TypeScript][typescript] transpiler.
-
-## Getting Started
-
-To get you started you can simply [clone](http://github.com/jseto/js-seed) the js-seed repository and install the dependencies:
-
-### Prerequisites
-
-You need git to clone the js-seed repository. You can get git from
-[http://git-scm.com/][git].
-
-We also use a number of node.js tools to initialize and test js-seed. You must have node.js and
-its package manager (npm) installed.  You can get them from [http://nodejs.org/][node].
-
-### Clone js-seed
-
-Clone the js-seed repository using [git][git]:
-
-```
-git clone https://github.com/jseto/js-seed.git
-cd js-seed
-```
-
-If you just want to start a new project without the js-seed commit history then you can do:
-
-```bash
-git clone --depth=1 https://github.com/jseto/js-seed.git <your-project-name>
-```
-
-The `depth=1` tells git to only pull down one commit worth of historical data.
-
-### Install gulp
-
-[Gulp][gulp] is used the build system. Install gulp globally to have access to the command line
-
-```
-npm install -g gulp
-```
 
 ### Install Dependencies
 
@@ -172,12 +126,6 @@ Although you can change the behaviour of the server, the proposed configuration 
 gulp develop
 ```
 
-or just 
-
-```
-gulp
-```
-
 this task will start the server and the client unit test watcher.
 
 If you only want the server without the tests invoke
@@ -200,6 +148,12 @@ If you invoke
 gulp develop:ts
 ```
 
+or just 
+
+```
+gulp
+```
+
 will do the same as `gulp develop` and aditionally it will watch typescript files for changes. In case a typescript changes it will be transpilled automatically.
 
 ## Continuous Integration
@@ -213,15 +167,6 @@ tests when you push to GitHub.
 
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
-
-### Contact, Contribute
-
-If you want support, a new feature or find a bug open a [new issue](https://github.com/jseto/js-seed/issues) in github.
-If you want to contribute, just make a pull request with your new code.
-
-# License
-
-__js-seed__ is distributed under the [MIT license](http://opensource.org/licenses/MIT)
 
 
 [git]: http://git-scm.com/

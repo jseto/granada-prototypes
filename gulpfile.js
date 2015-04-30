@@ -11,7 +11,7 @@ var del = require('del');
 var spawn = require('child_process').spawn;
 var gutil = require('gulp-util');
 
-gulp.task('default', ['develop']);
+gulp.task('default', ['develop:ts']);
 
 gulp.task('pristine', ['clean'], function( done ){
 	del([
