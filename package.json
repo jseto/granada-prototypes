@@ -1,8 +1,8 @@
 {
-  "name": "js-seed",
+  "name": "granada-prototypes",
   "version": "0.0.1",
   "description": "A starter project Angular",
-  "repository": "https://github.com/jseto/js-seed.git",
+  "repository": "https://github.com/jseto/granada-prototypes.git",
   "license": "MIT",
   "engines": {
     "node": "~0.10"

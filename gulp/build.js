@@ -1,9 +1,13 @@
+/// <reference path="../typings/node/node.d.ts" />
+/// <reference path="../typings/gulp/gulp.d.ts" />
+
 'use strict';
 
 var gulp = require('gulp');
 var project = require('../project.conf.js');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
+var dirname = require('path').dirname;
 var utils = require('./utils.js');
 var path = project.path;
 
@@ -15,34 +19,66 @@ gulp.task('clean:coverage', function(done){
 	del( [ path.coverage + '**'], done );
 });
 
-var tsProject = ts.createProject({
-    declarationFiles: true,
-    noExternalResolve: true
-});
-
-var _ts = function(){
-    var tsResult = gulp.src( path.client + '**/*.ts' ).pipe( ts( tsProject ) );
+var tsImpl = function(){
+    var tsResult = gulp.src([
+		path.client + '**/*.ts',
+//		path.typeDefinitions + '**/*.d.ts',
+	])
+    .pipe( ts({
+		declarationFiles: true		
+	}));
 
     return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done. 
-        tsResult.dts.pipe( gulp.dest( path.customTsd ) ),
-        tsResult.js.pipe( gulp.dest( path.tsOut ) )
+//        tsResult.dts.pipe( gulp.dest( path.customTsd ) ),
+        tsResult.js.pipe( gulp.dest( path.outputFiles ) )
     ]);
-
 };
 
-gulp.task('ts', _ts );
+var tsTest = function(){
+    var tsResult = gulp.src([
+		path.test.base + '**/*.ts',
+//		path.typeDefinitions + '**/*.d.ts',
+	])
+    .pipe( ts({}) );
+
+    return tsResult.js.pipe( gulp.dest( path.test.outputFiles ) );
+};
+
+var tsFile = function( filePath ) {
+	var isTestFile = filePath.indexOf( path.test.base ) >= 0; 
+
+	return gulp.src( filePath )
+				.pipe( ts({
+					declarationFiles: !isTestFile 
+				}) )
+				.pipe( gulp.dest( outPath() ) );
+
+	function outPath() {
+		if ( isTestFile ){
+			return path.test.outputFiles + dirname( filePath.slice( path.test.base.length ) );
+		}
+		else {
+			return path.outputFiles + dirname( filePath.slice( path.client.length ) );		
+		}
+	};
+};
+
+gulp.task( 'ts:impl', tsImpl );
+gulp.task( 'ts:test', tsTest );
+gulp.task('ts', ['ts:impl', 'ts:test'] );
 
 gulp.task('watch:ts', ['ts'], function(){
 	gulp.watch(	project.watch.typescriptFiles, function( data ){
 		console.log( utils.printChangedFiles( data, 'watch:ts' ) );
 		console.log( utils.printTaskName('watch:ts') + ' Transpiled' );
-		_ts();
+		tsFile( data.path );
 	});
 });
 
 gulp.task('clean:ts', function( done ){
 	del( [
 		path.customTsd + '**',
-		path.tsOut + '**'	
+		path.outputFiles + '**',	
+		path.test.outputFiles + '**'	
 	], done )
 });

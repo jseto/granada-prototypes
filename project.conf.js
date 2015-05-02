@@ -1,3 +1,5 @@
+/// <reference path="typings/node/node.d.ts" />
+
 'use strict';
 
 var fs = require('fs');
@@ -8,12 +10,14 @@ var basePath = __dirname;
 var path = {
 	base: basePath,
 	client: basePath + '/client/',
-	tsOut: basePath + '/client/out/', 				// TypeScript transpiled destination
+	outputFiles: basePath + '/client/out/',
+	typeDefinitions: basePath + '/' + tsd.path +'/', 				
 	customTsd: basePath + '/' + tsd.path + '/custom/',					// Generated TypeScript definition files
 	test: {
 		base: basePath + '/test/',
 		client: basePath + '/test/client/',
 		e2e: basePath + '/test/client/',
+		outputFiles: basePath + '/test/out/'
 	},
 	bower: basePath + '/' + bower.directory + '/',
 	coverage: basePath + '/coverage/'
@@ -32,7 +36,8 @@ module.exports = {
 			'!' + path.bower + '**/+(*.js|*.html|*.css)',			//excluded
 		],
 		typescriptFiles: [
-			path.client + '**/*.ts'
+			path.client + '**/*.ts',
+			path.test.base + '**/*.ts'
 		]
 	},
 	test:{
@@ -42,7 +47,8 @@ module.exports = {
 				path.bower + 'angular-mocks/angular-mocks.js',
 				path.client + '*.js',
 				path.client + '!(bower_components)/**/*.js',
-				path.test.client + '**/*.js'
+				path.test.client + '**/*.js',
+				path.test.outputFiles + '**/*.js'
 			],
 			exclude : [
 				path.test.client + '**/*.conf.js',
