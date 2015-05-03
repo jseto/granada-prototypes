@@ -16,9 +16,18 @@
 	<![endif]-->
 
 	<script src="bower_components/angular/angular.js"></script>
-	<script src="app.js"></script>
+
+	<script src="out/segmentation/segment.js"></script>
+	<script src="out/segmentation/segment-selection.js"></script>
+	<script src="out/app.js"></script>
 </head>
 
-<body>
+<body style="padding: 20px;">
+	<ul>
+		<li ng-repeat="segmentCandidate in segmentCandidates">
+			<a href="" ng-click="setSelected( segmentCandidate.displayName )">{{segmentCandidate.displayName}}</a>
+			<div ng-show="getSelected() === segmentCandidate.displayName" segment-selection="segmentCandidate.htmlTemplate()"></div>
+		</li>
+	</ul>
 </body>
 </html>

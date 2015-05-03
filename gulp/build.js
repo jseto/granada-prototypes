@@ -25,7 +25,8 @@ var tsImpl = function(){
 //		path.typeDefinitions + '**/*.d.ts',
 	])
     .pipe( ts({
-		declarationFiles: true		
+		declarationFiles: true,
+		target: 'ES5'		
 	}));
 
     return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done. 
@@ -39,7 +40,9 @@ var tsTest = function(){
 		path.test.base + '**/*.ts',
 //		path.typeDefinitions + '**/*.d.ts',
 	])
-    .pipe( ts({}) );
+    .pipe( ts({
+		target: 'ES5'
+	}) );
 
     return tsResult.js.pipe( gulp.dest( path.test.outputFiles ) );
 };
@@ -49,7 +52,8 @@ var tsFile = function( filePath ) {
 
 	return gulp.src( filePath )
 				.pipe( ts({
-					declarationFiles: !isTestFile 
+					declarationFiles: !isTestFile,
+					target: 'ES5' 
 				}) )
 				.pipe( gulp.dest( outPath() ) );
 
