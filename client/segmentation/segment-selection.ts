@@ -1,6 +1,9 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 
 module segmentation {
+	interface ISegmentSelectionDirectiveScope extends angular.IScope {
+		segmentSelection: () => string;
+	}
 
 	angular.module('segmentation', [])
 	
@@ -10,7 +13,7 @@ module segmentation {
 				segmentSelection: '&'	
 			},
 			restrict: 'AECM', 
-			link: function( scope: any, element: angular.IAugmentedJQuery, attr: angular.IAttributes ){
+			link: function( scope: ISegmentSelectionDirectiveScope, element: angular.IAugmentedJQuery, attr: angular.IAttributes ){
 				element.html( scope.segmentSelection() );
 			}
 		}
