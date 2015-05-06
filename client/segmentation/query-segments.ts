@@ -31,6 +31,7 @@ module Segmentation {
 			}).success( ( data: RawResponse ) => {
 				angular.extend( this.response, data );
 			});	
+			return this.response.promise;
 		}
 		
 		getSegmentCandidates(){

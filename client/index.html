@@ -17,17 +17,37 @@
 
 	<script src="bower_components/angular/angular.js"></script>
 
-	<script src="out/segmentation/segment.js"></script>
-	<script src="out/segmentation/segment-selection.js"></script>
+	<script src="out/segmentation/segments.js"></script>
+	<script src="out/segmentation/query-segments.js"></script>
+	<script src="out/segmentation/ask-for-segments.js"></script>
 	<script src="out/app.js"></script>
 </head>
 
 <body style="padding: 20px;">
-	<ul>
-		<li ng-repeat="segmentCandidate in segmentCandidates">
-			<a href="" ng-click="setSelected( segmentCandidate.displayName )">{{segmentCandidate.displayName}}</a>
-			<div ng-show="getSelected() === segmentCandidate.displayName" segment-selection="segmentCandidate.htmlTemplate()"></div>
-		</li>
-	</ul>
+	<div>
+		<input 
+			type="radio" 
+			name="_askForSegment" 
+			ng-model="segmentType"
+			ng-change="segmentTypeSelected()" 
+			ng-value="groupedId"/>
+			{{groupedLabel}}
+		<br>
+		<input 
+			type="radio" 
+			name="_askForSegment" 
+			ng-model="segmentType"
+			ng-change="segmentTypeSelected()" 
+			ng-value="openedEmailsId"/>
+			{{openedEmailsLabel}} 
+		<br>
+		<label>{{selectCandidateLabel}}</label>
+		<ul>
+			<li ng-repeat="segment in segmentCandidates" ng-click="segmentSelected( segment )">
+				<a href="">{{segment.description}}</a>
+			</li>
+		</ul> 
+			
+	</div>
 </body>
 </html>
