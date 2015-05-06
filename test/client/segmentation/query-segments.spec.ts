@@ -17,13 +17,24 @@ describe('Query segments service', function() {
         }
 	};
 	
+	var emailsObj = {
+		'followups': {
+			25: {campaign_id: 40, subject: 'Esto es un email', description:'#25 - Esto es un email', position: 1 },
+			30: {campaign_id: 40, subject: 'Esto es otro email', description:'#30 - Esto es otro email', position: 2 }
+		},
+		'broadcasts': {
+			12: {subject: 'Esto es un broadcast email', description:'#12 - Esto es un broadcast email', sent_at: '2015-02-02 00:00:00'},
+			14: {subject: 'Esto es un broadcast email mas', description:'#14 - Esto es un broadcast emailmas', sent_at: '2015-02-01 00:00:00'},
+		} 
+	}
+	
 	var fields: Segmentation.Grouped
 
 	beforeEach(()=>{
 		angular.mock.module('segmentation');		
 	});
 	
-	beforeEach( angular.mock.inject( function( $httpBackend, _segmentEndPoint_, _querySegments_ ){
+	beforeEach( angular.mock.inject(( $httpBackend, _segmentEndPoint_, _querySegments_ ) => {
 		http = $httpBackend;
 		segmentEndPoint = _segmentEndPoint_;
 		querySegments = _querySegments_;
@@ -44,6 +55,8 @@ describe('Query segments service', function() {
 			expect( querySegments.getSegmentCandidates().fields ).toBeDefined();
 			expect( querySegments.getSegmentCandidates().followups ).not.toBeDefined();
 			expect( querySegments.getSegmentCandidates().broadcasts ).not.toBeDefined();
+				
+			expect( querySegments.getSegmentCandidates().fields['country'].description ).toBe( 'Pais' );
 		});
 
 	});
@@ -51,7 +64,16 @@ describe('Query segments service', function() {
 	describe('when opened_emails query', function() {
 
 		it('should report a collection of segment emails', function() {
-
+			http.expectGET(  segmentEndPoint + '?segment_type=opened_emails' ).respond( emailsObj );
+			querySegments.get( Segmentation.SegmentType.opened_emails );
+			http.flush();
+			
+			expect( querySegments.getSegmentCandidates().fields ).not.toBeDefined();
+			expect( querySegments.getSegmentCandidates().followups ).toBeDefined();
+			expect( querySegments.getSegmentCandidates().broadcasts ).toBeDefined();
+			
+			expect( querySegments.getSegmentCandidates().followups[ 25 ].position ).toBe( 1 );
+			expect( querySegments.getSegmentCandidates().broadcasts[ 12 ].sent_at ).toBe( '2015-02-02 00:00:00' );
 		});
 
 	});
