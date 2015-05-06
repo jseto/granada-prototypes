@@ -46,6 +46,7 @@ module.exports = {
 				path.bower + 'angular/angular.js',
 				path.bower + 'angular-mocks/angular-mocks.js',
 				path.client + '*.js',
+				path.outputFiles + '**/*.js',
 				path.client + '!(bower_components)/**/*.js',
 				path.test.client + '**/*.js',
 				path.test.outputFiles + '**/*.js'
