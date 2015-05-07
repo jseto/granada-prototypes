@@ -2,7 +2,9 @@
 module Segmentation {
 	export enum SegmentType { grouped, opened_emails }
 	
-	export interface Grouped {
+	export interface Segment {}
+	
+	export interface Grouped extends Segment {
 		[field: string]: {	description: string; };
 	}
 	
@@ -16,7 +18,7 @@ module Segmentation {
 		position: number;
 	}
 	
-	export interface Followup {
+	export interface Followup extends Segment {
 		[ id: number ]: FollowupEmail;
 	}
 	
@@ -24,7 +26,7 @@ module Segmentation {
 		sent_at: Date;
 	}
 
-	export interface Broadcast {
+	export interface Broadcast extends Segment {
 		[ id: number ]: BroadcastEmail;
 	}
 }

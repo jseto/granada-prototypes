@@ -15,38 +15,49 @@ module Segmentation {
 	
 	export class QuerySegments {
 		constructor( $http: angular.IHttpService, segmentEndPoint: string ) {
-			this.http = $http;
-			this.segmentEndPoint = segmentEndPoint;
-			this.response = { promise: null };
+			this._http = $http;
+			this._segmentEndPoint = segmentEndPoint;
+			this._response = { promise: null };
 		}
 		
 		get( segmentType: SegmentType, campaignId?: number ){
-			this.response.promise = this.http({
+			this._segmentType = segmentType;
+			
+			this._response.promise = this._http({
 				method: 'GET',
-				url: this.segmentEndPoint,
+				url: this._segmentEndPoint,
 				params: {
 					campaign_id: campaignId,
 					segment_type: SegmentType[segmentType]
 				}
 			}).success( ( data: RawResponse ) => {
-				angular.extend( this.response, data );
+				angular.extend( this._response, data );
 			});	
-			return this.response.promise;
+			return this._response.promise;
+		}
+		
+		post( segment: Segment ){
+			this._http.post( this._segmentEndPoint, segment );
 		}
 		
 		getSegmentCandidates(){
-			return this.response;
+			return this._response;
 		}
 		
-		private http: angular.IHttpService;
-		private segmentEndPoint: string;
-		private response: Response;
+		segmentType() {
+			return this._segmentType;
+		}
+		
+		private _http: angular.IHttpService;
+		private _segmentEndPoint: string;
+		private _response: Response;
+		private _segmentType: SegmentType;
 	}
 
 	angular.module('segmentation', [
 	])
 	.service( 'querySegments', QuerySegments )
-	.constant( 'segmentEndPoint', 'mock-data/segments.json' )
+	.constant( 'segmentEndPoint', '/segments' )
 	;
 }
 

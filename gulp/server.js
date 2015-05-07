@@ -9,17 +9,20 @@ var browserSync = require( 'browser-sync' );
 gulp.task('server:start', ['browser-sync']);
 
 gulp.task('browser-sync', function() {
-    browserSync({
-        server: {
-            baseDir: path.client,
-            routes: {
-            	'/': path.client,
-            }
-        },
-        notify: false,
-        open: false,
-        port: project.port
-    });
+	var segmentsRoute = require('./server-middleware.js');
+	
+	browserSync({
+		server: {
+			baseDir: path.client,
+			routes: {
+				'/': path.client,
+			},
+			middleware: segmentsRoute
+		},
+		notify: false,
+		open: false,
+		port: project.port
+	});
 });
 
 gulp.task('server:reload', ['browser-sync'], function(){

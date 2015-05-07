@@ -43,11 +43,29 @@
 		<br>
 		<label>{{selectCandidateLabel}}</label>
 		<ul>
-			<li ng-repeat="segment in segmentCandidates" ng-click="segmentSelected( segment )">
+			<li 
+				ng-show="segmentType == groupedId"
+				ng-repeat="segment in segmentCandidates.fields" 
+				ng-click="segmentSelected( segment )"
+			>
 				<a href="">{{segment.description}}</a>
 			</li>
+			<ul ng-show="segmentType == openedEmailsId">
+				<li>{{followupLabel}}</li>
+				<ul>
+					<li ng-repeat="segment in segmentCandidates.followups" ng-click="segmentSelected( segment )">
+						<a href="">{{segment.description}}</a>
+					</li>
+				</ul>
+				<li>{{broadcastLabel}}</li>
+				<ul>
+					<li ng-repeat="segment in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
+						<a href="">{{segment.description}}</a>
+					</li>
+				</ul>
+			</ul>
 		</ul> 
-			
+		<button ng-click="postSegment()">{{postSegmentLabel}}</button>	
 	</div>
 </body>
 </html>
