@@ -5,7 +5,7 @@
 		ng-model="segmentType"
 		ng-change="segmentTypeSelected()" 
 		ng-value="groupedId"/>
-		{{config.groupedLabel}}
+		{{groupedLabel}}
 	<br>
 	<input 
 		type="radio" 
@@ -13,9 +13,9 @@
 		ng-model="segmentType"
 		ng-change="segmentTypeSelected()" 
 		ng-value="openedEmailsId"/>
-		{{config.openedEmailsLabel}} 
+		{{openedEmailsLabel}} 
 	<br>
-	<label>{{config.selectCandidateLabel}}</label>
+	<label>{{selectCandidateLabel}}</label>
 	<ul>
 		<li 
 			ng-show="segmentType == groupedId"
@@ -25,13 +25,13 @@
 			<a href="">{{segment.description}}</a>
 		</li>
 		<ul ng-show="segmentType == openedEmailsId">
-			<li>{{config.followupLabel}}</li>
+			<li>{{followupLabel}}</li>
 			<ul>
 				<li ng-repeat="segment in segmentCandidates.followups" ng-click="segmentSelected( segment )">
 					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
-			<li>{{config.broadcastLabel}}</li>
+			<li>{{broadcastLabel}}</li>
 			<ul>
 				<li ng-repeat="segment in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
 					<a href="">{{segment.description}}</a>
@@ -39,5 +39,5 @@
 			</ul>
 		</ul>
 	</ul> 
-	<button ng-click="postSegment()">{{config.postSegmentLabel}}</button>	
+	<button ng-click="postSegment()">{{postSegmentLabel}}</button>	
 </div>

@@ -22,7 +22,7 @@ module Segmentation{
 		segmentCandidates: Segmentation.Response;
 		postSegmentLabel: string;
 		postSegment: ()=>void;
-		config: IAskForSegmentsConfig;
+//		config: IAskForSegmentsConfig;
 		askForSegments: IAskForSegmentsConfig;
 	}
 	
@@ -40,15 +40,16 @@ module Segmentation{
 			$scope.segmentCandidates = {
 				promise: null
 			};
-				
-			$scope.config = $scope.askForSegments;
+			
+			angular.extend( $scope, $scope.askForSegments );	// pass config to local scope
+
 			$scope.groupedId = Segmentation.SegmentType.grouped;
 			$scope.openedEmailsId = Segmentation.SegmentType.opened_emails;
 			
 			$scope.segmentTypeSelected = function(){
 				selectedSegment = null;
 				
-				querySegments.get( $scope.segmentType, $scope.config.campaignId )
+				querySegments.get( $scope.segmentType, $scope.campaignId )
 					.then(()=>{
 						$scope.segmentCandidates = querySegments.getSegmentCandidates();
 					});
