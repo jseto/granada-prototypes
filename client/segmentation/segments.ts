@@ -1,5 +1,22 @@
+/// <reference path="../../typings/angularjs/angular.d.ts" />
+/// <reference path="../utils/class-helpers" />
+
 
 module Segmentation {
+	angular.module('segmentation',[
+		'segmentation.query',
+		'segmentation.askFor'
+	]);
+
+//	var segmentationNgModule = angular.module('segmentation');
+//	export class SegmentationModule extends ClassHelpers.Singleton {
+//		constructor( module: string ) {
+//			super();
+//			SegmentationModule._module = angular.module('segmentation',[]);
+//		};
+//		private static _module: angular.IModule;
+//	};
+	
 	export enum SegmentType { grouped, opened_emails }
 	
 	export interface Segment {}

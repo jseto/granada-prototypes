@@ -54,7 +54,7 @@ module Segmentation {
 		private _segmentType: SegmentType;
 	}
 
-	angular.module('segmentation', [
+	angular.module('segmentation.query',[
 	])
 	.service( 'querySegments', QuerySegments )
 	.constant( 'segmentEndPoint', '/segments' )

@@ -24,48 +24,7 @@
 </head>
 
 <body style="padding: 20px;">
-	<div>
-		<input 
-			type="radio" 
-			name="_askForSegment" 
-			ng-model="segmentType"
-			ng-change="segmentTypeSelected()" 
-			ng-value="groupedId"/>
-			{{groupedLabel}}
-		<br>
-		<input 
-			type="radio" 
-			name="_askForSegment" 
-			ng-model="segmentType"
-			ng-change="segmentTypeSelected()" 
-			ng-value="openedEmailsId"/>
-			{{openedEmailsLabel}} 
-		<br>
-		<label>{{selectCandidateLabel}}</label>
-		<ul>
-			<li 
-				ng-show="segmentType == groupedId"
-				ng-repeat="segment in segmentCandidates.fields" 
-				ng-click="segmentSelected( segment )"
-			>
-				<a href="">{{segment.description}}</a>
-			</li>
-			<ul ng-show="segmentType == openedEmailsId">
-				<li>{{followupLabel}}</li>
-				<ul>
-					<li ng-repeat="segment in segmentCandidates.followups" ng-click="segmentSelected( segment )">
-						<a href="">{{segment.description}}</a>
-					</li>
-				</ul>
-				<li>{{broadcastLabel}}</li>
-				<ul>
-					<li ng-repeat="segment in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
-						<a href="">{{segment.description}}</a>
-					</li>
-				</ul>
-			</ul>
-		</ul> 
-		<button ng-click="postSegment()">{{postSegmentLabel}}</button>	
+	<div ask-for-segments="askForSegmentsConfig">
 	</div>
 </body>
 </html>

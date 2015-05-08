@@ -1,0 +1,43 @@
+<div>
+	<input 
+		type="radio" 
+		name="_askForSegment" 
+		ng-model="segmentType"
+		ng-change="segmentTypeSelected()" 
+		ng-value="groupedId"/>
+		{{config.groupedLabel}}
+	<br>
+	<input 
+		type="radio" 
+		name="_askForSegment" 
+		ng-model="segmentType"
+		ng-change="segmentTypeSelected()" 
+		ng-value="openedEmailsId"/>
+		{{config.openedEmailsLabel}} 
+	<br>
+	<label>{{config.selectCandidateLabel}}</label>
+	<ul>
+		<li 
+			ng-show="segmentType == groupedId"
+			ng-repeat="segment in segmentCandidates.fields" 
+			ng-click="segmentSelected( segment )"
+		>
+			<a href="">{{segment.description}}</a>
+		</li>
+		<ul ng-show="segmentType == openedEmailsId">
+			<li>{{config.followupLabel}}</li>
+			<ul>
+				<li ng-repeat="segment in segmentCandidates.followups" ng-click="segmentSelected( segment )">
+					<a href="">{{segment.description}}</a>
+				</li>
+			</ul>
+			<li>{{config.broadcastLabel}}</li>
+			<ul>
+				<li ng-repeat="segment in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
+					<a href="">{{segment.description}}</a>
+				</li>
+			</ul>
+		</ul>
+	</ul> 
+	<button ng-click="postSegment()">{{config.postSegmentLabel}}</button>	
+</div>
