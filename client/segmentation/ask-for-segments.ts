@@ -16,13 +16,14 @@ module Segmentation{
 	interface IAskForSegmentScope extends angular.IScope, IAskForSegmentsConfig {
 		segmentType: Segmentation.SegmentType;
 		segmentTypeSelected: ()=>void;
-		segmentSelected: ( Segmentation.Segment );
+		fieldSelected: ( key: string, segment: Segmentation.Segment )=>void;
+		broadcastSelected: ( key: string, segment: Segmentation.Segment )=>void;
+		followupSelected: ( key: string, segment: Segmentation.Segment )=>void;
 		groupedId: Segmentation.SegmentType;
 		openedEmailsId: Segmentation.SegmentType;
 		segmentCandidates: Segmentation.Response;
 		postSegmentLabel: string;
 		postSegment: ()=>void;
-//		config: IAskForSegmentsConfig;
 		askForSegments: IAskForSegmentsConfig;
 	}
 	
@@ -35,7 +36,7 @@ module Segmentation{
 		restrict = 'AC';
 		
 		private controllerFn( $scope: IAskForSegmentScope, querySegments: QuerySegments ){
-			var selectedSegment: Segmentation.Segment;
+			var selected: PostObject;
 
 			$scope.segmentCandidates = {
 				promise: null
@@ -47,7 +48,7 @@ module Segmentation{
 			$scope.openedEmailsId = Segmentation.SegmentType.opened_emails;
 			
 			$scope.segmentTypeSelected = function(){
-				selectedSegment = null;
+				selected = null;
 				
 				querySegments.get( $scope.segmentType, $scope.campaignId )
 					.then(()=>{
@@ -55,15 +56,34 @@ module Segmentation{
 					});
 			}
 			
-			$scope.segmentSelected = function( segment: Segmentation.Segment ) {
-				console.log( segment );
-				selectedSegment = segment;
+			$scope.fieldSelected = function( key: string, segment: Segmentation.Segment ) {
+				selected = {
+					key: key,
+					option: 'field',
+					segment: segment
+				};
+				console.log( selected );
+			}
+
+			$scope.broadcastSelected = function( key: string, segment: Segmentation.Segment ) {
+				selected = {
+					key: key,
+					option: 'broadcast',
+					segment: segment
+				};
+				console.log( selected );
+			}
+			$scope.followupSelected = function( key: string, segment: Segmentation.Segment ) {
+				selected = {
+					key: key,
+					option: 'followup',
+					segment: segment
+				};
+				console.log( selected );
 			}
 			
 			$scope.postSegment = function() {
-				console.log( selectedSegment );
-				
-				querySegments.post( selectedSegment );
+				querySegments.post( selected, $scope.segmentType, $scope.campaignId );
 			}
 		}
 	}

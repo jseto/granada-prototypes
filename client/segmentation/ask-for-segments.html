@@ -19,21 +19,21 @@
 	<ul>
 		<li 
 			ng-show="segmentType == groupedId"
-			ng-repeat="segment in segmentCandidates.fields" 
-			ng-click="segmentSelected( segment )"
+			ng-repeat="(key, segment) in segmentCandidates.fields" 
+			ng-click="fieldSelected( key, segment )"
 		>
 			<a href="">{{segment.description}}</a>
 		</li>
 		<ul ng-show="segmentType == openedEmailsId">
 			<li>{{followupLabel}}</li>
 			<ul>
-				<li ng-repeat="segment in segmentCandidates.followups" ng-click="segmentSelected( segment )">
+				<li ng-repeat="(key, segment) in segmentCandidates.followups" ng-click="followupSelected( key, segment )">
 					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
 			<li>{{broadcastLabel}}</li>
 			<ul>
-				<li ng-repeat="segment in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
+				<li ng-repeat="(key, segment) in segmentCandidates.broadcasts" ng-click="broadcastSelected( key, segment )">
 					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>

@@ -13,6 +13,13 @@ module Segmentation {
 		promise: angular.IPromise<Response>;
 	}
 	
+		
+	export interface PostObject {
+		key: any;
+		option: string;
+		segment: Segment;	
+	}
+	
 	export class QuerySegments {
 		constructor( $http: angular.IHttpService, segmentEndPoint: string ) {
 			this._http = $http;
@@ -36,8 +43,16 @@ module Segmentation {
 			return this._response.promise;
 		}
 		
-		post( segment: Segment ){
-			this._http.post( this._segmentEndPoint, segment );
+		post( obj: PostObject, segmentType: SegmentType, campaignId: number ){
+			var data = {
+				campaign_id: campaignId,
+				segment_type: SegmentType[ segmentType ],
+				option: {}
+			};
+			data.option[ obj.option ] = obj.key;
+						
+			console.log( 'Post data: ', data );
+			this._http.post( this._segmentEndPoint, data);
 		}
 		
 		getSegmentCandidates(){

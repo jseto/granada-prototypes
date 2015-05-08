@@ -88,7 +88,7 @@ describe('Query segments service', function() {
 		});
 	});
 	
-	xdescribe('when post', function(){
+	describe('when post', function(){
 		it('should post grouped to server', function() {
 			http.expectPOST( segmentEndPoint, {
 				campaign_id: 40,
@@ -99,12 +99,47 @@ describe('Query segments service', function() {
 			}).respond({});
 			
 			querySegments.post({
-				fields: {
-					country: {
-						description: 'Pais'
-					}
+				key: 'country',
+				option: 'field',
+				segment: {
 				}
-			});
+			}, Segmentation.SegmentType.grouped, 40 );
+			http.flush();
+		});
+
+		it('should post broadcast to server', function() {
+			http.expectPOST( segmentEndPoint, {
+				campaign_id: 40,
+				segment_type: 'opened_emails',
+				option:  {
+					broadcast: 12
+				}
+			}).respond({});
+			
+			querySegments.post({
+				key: 12,
+				option: 'broadcast',
+				segment: {
+				}
+			}, Segmentation.SegmentType.opened_emails, 40 );
+			http.flush();
+		});
+
+		it('should post grouped to server', function() {
+			http.expectPOST( segmentEndPoint, {
+				campaign_id: 40,
+				segment_type: 'opened_emails',
+				option:  {
+					followup: 25
+				}
+			}).respond({});
+			
+			querySegments.post({
+				key: 25,
+				option: 'followup',
+				segment: {
+				}
+			}, Segmentation.SegmentType.opened_emails, 40 );
 			http.flush();
 		});
 	})
