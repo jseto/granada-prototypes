@@ -31,7 +31,7 @@ module Segmentation{
 		scope = {
 			askForSegments: '='	
 		};
-		templateUrl = 'segmentation/ask-for-segments.html';
+		templateUrl = 'client/segmentation/ask-for-segments.html';
 		controller = this.controllerFn;
 		restrict = 'AC';
 		

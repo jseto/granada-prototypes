@@ -24,7 +24,10 @@ var path = {
 };
 
 var karmaPreprocessors = {};
-karmaPreprocessors[ path.test + '**/*.html' ] = 'ng-html2js';
+karmaPreprocessors[
+	path.test + '**/*.html',
+	path.client + 'segmentation/**/*.html'
+] = 'ng-html2js';
 karmaPreprocessors[ path.base + '/{client,client/!(bower_components)/**}/*.js' ] = 'coverage';
 
 module.exports = {
@@ -43,13 +46,15 @@ module.exports = {
 	test:{
 		unit:{
 			files : [
+				path.bower + 'jquery/dist/jquery.js',
 				path.bower + 'angular/angular.js',
 				path.bower + 'angular-mocks/angular-mocks.js',
 				path.client + '*.js',
 				path.outputFiles + '**/*.js',
 				path.client + '!(bower_components)/**/*.js',
 				path.test.client + '**/*.js',
-				path.test.outputFiles + '**/*.js'
+				path.test.outputFiles + '**/*.js',
+				path.client + 'segmentation/**/*.html'
 			],
 			exclude : [
 				path.test.client + '**/*.conf.js',
