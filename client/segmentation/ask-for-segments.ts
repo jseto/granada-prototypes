@@ -38,11 +38,9 @@ module Segmentation{
 		restrict = 'AC';
 
 		private controllerFn( $scope: IAskForSegmentScope, querySegments: QuerySegments ){
-			var selected: PostObject;
+			var selected: Segment;
 
-			$scope.segmentCandidates = {
-				promise: null
-			};
+			$scope.segmentCandidates = new Response();
 
 			angular.extend( $scope, $scope.askForSegments );	// pass config to local scope
 
@@ -52,35 +50,20 @@ module Segmentation{
 			$scope.segmentTypeSelected = function(){
 				selected = null;
 
-				querySegments.get( $scope.segmentType, $scope.campaignId )
-					.then(()=>{
-						$scope.segmentCandidates = querySegments.getSegmentCandidates();
-					});
+				$scope.segmentCandidates = querySegments.get( $scope.segmentType, $scope.campaignId );
 			}
 
 			$scope.fieldSelected = function( key: string, segment: Segmentation.Segment ) {
-				selected = {
-					key: key,
-					option: 'field',
-					segment: segment
-				};
+				selected = segment;
 				console.log( 'Selected segment', selected );
 			}
 
 			$scope.broadcastSelected = function( key: string, segment: Segmentation.Segment ) {
-				selected = {
-					key: key,
-					option: 'broadcast',
-					segment: segment
-				};
+				selected = segment
 				console.log( selected );
 			}
 			$scope.followupSelected = function( key: string, segment: Segmentation.Segment ) {
-				selected = {
-					key: key,
-					option: 'followup',
-					segment: segment
-				};
+				selected = segment;
 				console.log( selected );
 			}
 

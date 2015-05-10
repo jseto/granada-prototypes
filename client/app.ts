@@ -6,7 +6,7 @@
 interface IAppScope extends angular.IScope {
 	segmentType: Segmentation.SegmentType;
 	segmentTypeSelected: ()=>void;
-	segmentSelected: ( Segmentation.Segment );
+	segmentSelected: ( Segmentation.BackEndSegment );
 	groupedId: Segmentation.SegmentType;
 	groupedLabel: string;
 	openedEmailsId: Segmentation.SegmentType;
@@ -27,7 +27,7 @@ angular.module('app', [
 .controller('appController', function( $scope: IAppScope ){
 	/* istanbul ignore next */
 	$scope.askForSegmentsConfig = {
-		groupedLabel: 'Grouped_',
+		groupedLabel: 'Grouped',
 		openedEmailsLabel: 'Opened Emails',
 		followupLabel: 'Followups',
 		broadcastLabel: 'Broadcasts',

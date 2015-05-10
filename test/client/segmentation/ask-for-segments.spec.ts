@@ -20,7 +20,6 @@ describe( 'Directive askForSegments', ()=>{
 	};
 
 	var html = '<div ask-for-segments="config" template="client/segmentation/ask-for-segments.html"></div>';
-//	var html = '<div ask-for-segments="config"></div>';
 	var element: angular.IAugmentedJQuery;
 
 
@@ -99,6 +98,10 @@ describe( 'Directive askForSegments', ()=>{
 			expect( element.find('#__test_broadcasts').children().length ).toBe(0);
 		});
 
+		it('should show description',()=>{
+			expect( element.find('#__test_fields').first().text().trim() ).toBe('Pais');
+		});
+
 		it('should select segment', ()=>{
 			element.find('#__test_fields>a').first().click();
 
@@ -107,7 +110,7 @@ describe( 'Directive askForSegments', ()=>{
 
 		it('should post selected segment', ()=>{
 			element.find('#__test_fields>a').first().click();
-			http.expectPOST( '/segments', {"campaign_id":40,"segment_type":"grouped","option":{"field":"company_type"}}).respond({});
+			http.expectPOST( '/segments', {"campaign_id":40,"segment_type":"grouped","option":{"field":"country"}}).respond({});
 			element.find('button').click();
 			http.flush();
 		});
@@ -127,6 +130,11 @@ describe( 'Directive askForSegments', ()=>{
 			expect( element.find('#__test_fields').children().length ).toBe( 0 );
 			expect( element.find('#__test_followups').children().length ).toBe(2);
 			expect( element.find('#__test_broadcasts').children().length ).toBe(2);
+		});
+
+		it('should show description',()=>{
+			expect( element.find('#__test_followups>li').first().text().trim() ).toBe('#25 - Esto es un email');
+			expect( element.find('#__test_broadcasts>li').first().text().trim() ).toBe('#12 - Esto es un broadcast email');
 		});
 
 		describe('when followup selected', ()=>{

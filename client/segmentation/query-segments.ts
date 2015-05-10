@@ -9,25 +9,28 @@ module Segmentation {
 		broadcasts?: Broadcast;
 	}
 
-	export interface Response extends RawResponse {
+	export class Response {
+		fields: Segment[];
+		followups: Segment[];
+		broadcasts: Segment[];
 		promise: angular.IPromise<Response>;
 	}
 
 
-	export interface PostObject {
-		key: any;
-		option: string;
-		segment: Segment;
-	}
+	// export interface PostObject {
+	// 	key: any;
+	// 	option: string;
+	// 	segment: BackEndSegment;
+	// }
 
 	export class QuerySegments {
 		constructor( $http: angular.IHttpService, segmentEndPoint: string ) {
 			this._http = $http;
 			this._segmentEndPoint = segmentEndPoint;
-			this._response = { promise: null };
 		}
 
 		get( segmentType: SegmentType, campaignId?: number ){
+			this._response = new Response();
 			this._segmentType = segmentType;
 
 			this._response.promise = this._http({
@@ -38,12 +41,39 @@ module Segmentation {
 					segment_type: SegmentType[segmentType]
 				}
 			}).success( ( data: RawResponse ) => {
-				angular.extend( this._response, data );
+				this._response.fields = [];
+				this._response.followups = [];
+				this._response.broadcasts = [];
+
+				angular.forEach( data.fields, (value, key)=>{
+					this._response.fields.push({
+						key: key,
+						option: 'field',
+						value: value
+					});
+				});
+
+				angular.forEach( data.followups, (value, key)=>{
+					this._response.followups.push({
+						key: key,
+						option: 'followup',
+						value: value
+					});
+				});
+
+				angular.forEach( data.broadcasts, (value, key)=>{
+					this._response.broadcasts.push({
+						key: key,
+						option: 'broadcast',
+						value: value
+					});
+				});
+
 			});
-			return this._response.promise;
+			return this._response;
 		}
 
-		post( obj: PostObject, segmentType: SegmentType, campaignId: number ){
+		post( obj: Segment, segmentType: SegmentType, campaignId: number ){
 			var data = {
 				campaign_id: campaignId,
 				segment_type: SegmentType[ segmentType ],
