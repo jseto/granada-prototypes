@@ -10,7 +10,6 @@ module Segmentation{
 		followupLabel?: string;
 		broadcastLabel?: string;
 		postSegmentLabel?: string;
-		labels: string[];
 		campaignId: number;
 	};
 
@@ -18,6 +17,8 @@ module Segmentation{
 		segmentType: Segmentation.SegmentType;
 		segmentTypeSelected: ()=>void;
 		segmentSelected: ( segment: Segmentation.Segment )=>void;
+		getOptionLabels: ( option: string ) => string;
+		selectedSegment: Segmentation.Segment;
 		groupedId: Segmentation.SegmentType;
 		openedEmailsId: Segmentation.SegmentType;
 		segmentCandidates: Segmentation.Response;
@@ -37,7 +38,6 @@ module Segmentation{
 		restrict = 'AC';
 
 		private controllerFn( $scope: IAskForSegmentScope, querySegments: QuerySegments ){
-			var selected: Segment;
 
 			$scope.segmentCandidates = new Response();
 
@@ -47,23 +47,28 @@ module Segmentation{
 			$scope.openedEmailsId = Segmentation.SegmentType.opened_emails;
 
 			$scope.segmentTypeSelected = function(){
-				selected = null;
+				$scope.selectedSegment = null;
 
 				$scope.segmentCandidates = querySegments.get( $scope.segmentType, $scope.campaignId );
 			}
 
 			$scope.segmentSelected = function( segment: Segmentation.Segment ) {
-				selected = segment;
-				console.log( 'Selected segment', selected );
+				$scope.selectedSegment = segment;
+				console.log( 'Selected segment', $scope.selectedSegment );
 			}
 
 			$scope.postSegment = function() {
-				querySegments.post( selected, $scope.segmentType, $scope.campaignId );
+				querySegments.post( $scope.selectedSegment, $scope.segmentType, $scope.campaignId );
 			}
 
-			$scope.labels = [];
-			$scope.labels['followup'] = $scope.followupLabel;
-			$scope.labels['broadcast'] = $scope.broadcastLabel;
+			$scope.getOptionLabels = function( option: string ){
+				switch( option ){
+					case 'followup':
+						return $scope.followupLabel;
+					case 'broadcast':
+						return $scope.broadcastLabel;
+				};
+			}
 		}
 	}
 

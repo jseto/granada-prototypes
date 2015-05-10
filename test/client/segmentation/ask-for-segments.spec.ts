@@ -74,7 +74,7 @@ describe( 'Directive askForSegments', ()=>{
 		spyOn( directiveScope, 'segmentSelected' ).and.callThrough();
 	});
 
-	it('should show only segement type selector',()=>{
+	it('should show only segment type selector',()=>{
 		expect( element.find('#__test_fields').children().length ).toBe(0);
 		expect( element.find('#__test_followups').children().length ).toBe(0);
 		expect( element.find('#__test_broadcasts').children().length ).toBe(0);
