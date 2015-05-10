@@ -1,5 +1,6 @@
-
+/* istanbul ignore next */
 module ClassHelpers {
+	/* istanbul ignore next */
 	export class Singleton{
 		constructor() {
 			if ( Singleton._instance ) {
@@ -7,11 +8,11 @@ module ClassHelpers {
 			}
 			Singleton._instance = this;
 		}
-		
+
 		instance(){
 			return Singleton._instance;
 		}
-		
+
 		private static _instance: Singleton = new Singleton();
 	};
 }

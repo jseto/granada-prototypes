@@ -60,6 +60,7 @@ describe( 'Directive askForSegments', ()=>{
 
 	beforeEach(()=>{
 		element = $compile( html )( scope );
+		scope.config = config;
 		scope.$digest();
 
 		//lets grab the directive controller scope, so we can spy on internal directive methods
@@ -70,7 +71,7 @@ describe( 'Directive askForSegments', ()=>{
 
 	beforeEach(()=>{
 		http.whenGET('/segments?campaign_id=40&segment_type=grouped').respond( fieldsObj );
-		http.whenGET('/segments?segment_type=grouped').respond( fieldsObj );
+		http.whenGET('/segments?campaign_id=40&segment_type=opened_emails').respond( emailsObj );
 	});
 
 	it('should show only segement type selector',()=>{
@@ -86,10 +87,6 @@ describe( 'Directive askForSegments', ()=>{
 
 	describe('when grouped selected',()=>{
 		beforeEach(()=>{
-			scope.$apply(()=>{
-				scope.config = config;
-			});
-
 			spyOn( directiveScope, 'fieldSelected' ).and.callThrough();
 
 			element.find('#__test_groupedRB')[0].click();
@@ -110,10 +107,56 @@ describe( 'Directive askForSegments', ()=>{
 
 		it('should post selected segment', ()=>{
 			element.find('#__test_fields>a').first().click();
-			http.expectPOST( '/segments', {"segment_type":"grouped","option":{"field":"company_type"}}).respond({});
+			http.expectPOST( '/segments', {"campaign_id":40,"segment_type":"grouped","option":{"field":"company_type"}}).respond({});
 			element.find('button').click();
 			http.flush();
 		});
 
+	});
+
+	describe('when opened_emails selected',()=>{
+		beforeEach(()=>{
+			spyOn( directiveScope, 'followupSelected' ).and.callThrough();
+			spyOn( directiveScope, 'broadcastSelected' ).and.callThrough();
+
+			element.find('#__test_openedEmailRB')[0].click();
+			http.flush();
+		});
+
+		it('sould show followups and broadcast list', ()=>{
+			expect( element.find('#__test_fields').children().length ).toBe( 0 );
+			expect( element.find('#__test_followups').children().length ).toBe(2);
+			expect( element.find('#__test_broadcasts').children().length ).toBe(2);
+		});
+
+		describe('when followup selected', ()=>{
+			it('should select followup segment', ()=>{
+				element.find('#__test_followups').find('a').first().click();
+
+				expect( directiveScope.followupSelected ).toHaveBeenCalled();
+			});
+
+			it('should post selected segment', ()=>{
+				element.find('#__test_followups').find('a').first().click();
+				http.expectPOST( '/segments', {"campaign_id":40,"segment_type":"opened_emails","option":{"followup":"25"}}).respond({});
+				element.find('button').click();
+				http.flush();
+			});
+		});
+
+		describe('when broadcast selected', ()=>{
+			it('should select broadcast segment', ()=>{
+				element.find('#__test_broadcasts').find('a').first().click();
+
+				expect( directiveScope.broadcastSelected ).toHaveBeenCalled();
+			});
+
+			it('should post selected segment', ()=>{
+				element.find('#__test_broadcasts').find('a').first().click();
+				http.expectPOST( '/segments', {"campaign_id":40,"segment_type":"opened_emails","option":{"broadcast":"12"}}).respond({});
+				element.find('button').click();
+				http.flush();
+			});
+		});
 	});
 });

@@ -64,7 +64,7 @@ module Segmentation{
 					option: 'field',
 					segment: segment
 				};
-				console.log( selected );
+				console.log( 'Selected segment', selected );
 			}
 
 			$scope.broadcastSelected = function( key: string, segment: Segmentation.Segment ) {

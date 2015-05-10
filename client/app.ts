@@ -24,10 +24,10 @@ angular.module('app', [
 	'segmentation'
 ])
 
-.controller('appController', function( $scope: IAppScope ){	
-
+.controller('appController', function( $scope: IAppScope ){
+	/* istanbul ignore next */
 	$scope.askForSegmentsConfig = {
-		groupedLabel: 'Grouped',
+		groupedLabel: 'Grouped_',
 		openedEmailsLabel: 'Opened Emails',
 		followupLabel: 'Followups',
 		broadcastLabel: 'Broadcasts',
@@ -35,4 +35,3 @@ angular.module('app', [
 		campaignId: 40
 	};
 });
-
