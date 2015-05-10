@@ -34,6 +34,6 @@
   },
   "dependencies": {},
   "scripts": {
-    "postinstall": "bower install && tsd update && gulp postinstall"
+    "postinstall": "bower install && tsd reinstal && gulp postinstall"
   }
 }
