@@ -71,6 +71,8 @@ describe( 'Directive askForSegments', ()=>{
 	beforeEach(()=>{
 		http.whenGET('/segments?campaign_id=40&segment_type=grouped').respond( fieldsObj );
 		http.whenGET('/segments?campaign_id=40&segment_type=opened_emails').respond( emailsObj );
+
+		spyOn( directiveScope, 'segmentSelected' ).and.callThrough();
 	});
 
 	it('should show only segement type selector',()=>{
@@ -86,8 +88,6 @@ describe( 'Directive askForSegments', ()=>{
 
 	describe('when grouped selected',()=>{
 		beforeEach(()=>{
-			spyOn( directiveScope, 'fieldSelected' ).and.callThrough();
-
 			element.find('#__test_groupedRB')[0].click();
 			http.flush();
 		});
@@ -105,7 +105,7 @@ describe( 'Directive askForSegments', ()=>{
 		it('should select segment', ()=>{
 			element.find('#__test_fields>a').first().click();
 
-			expect( directiveScope.fieldSelected ).toHaveBeenCalled();
+			expect( directiveScope.segmentSelected ).toHaveBeenCalled();
 		});
 
 		it('should post selected segment', ()=>{
@@ -119,9 +119,6 @@ describe( 'Directive askForSegments', ()=>{
 
 	describe('when opened_emails selected',()=>{
 		beforeEach(()=>{
-			spyOn( directiveScope, 'followupSelected' ).and.callThrough();
-			spyOn( directiveScope, 'broadcastSelected' ).and.callThrough();
-
 			element.find('#__test_openedEmailRB')[0].click();
 			http.flush();
 		});
@@ -141,7 +138,7 @@ describe( 'Directive askForSegments', ()=>{
 			it('should select followup segment', ()=>{
 				element.find('#__test_followups').find('a').first().click();
 
-				expect( directiveScope.followupSelected ).toHaveBeenCalled();
+				expect( directiveScope.segmentSelected ).toHaveBeenCalled();
 			});
 
 			it('should post selected segment', ()=>{
@@ -156,7 +153,7 @@ describe( 'Directive askForSegments', ()=>{
 			it('should select broadcast segment', ()=>{
 				element.find('#__test_broadcasts').find('a').first().click();
 
-				expect( directiveScope.broadcastSelected ).toHaveBeenCalled();
+				expect( directiveScope.segmentSelected ).toHaveBeenCalled();
 			});
 
 			it('should post selected segment', ()=>{

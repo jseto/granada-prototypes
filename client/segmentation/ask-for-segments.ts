@@ -16,9 +16,7 @@ module Segmentation{
 	export interface IAskForSegmentScope extends angular.IScope, IAskForSegmentsConfig {
 		segmentType: Segmentation.SegmentType;
 		segmentTypeSelected: ()=>void;
-		fieldSelected: ( key: string, segment: Segmentation.Segment )=>void;
-		broadcastSelected: ( key: string, segment: Segmentation.Segment )=>void;
-		followupSelected: ( key: string, segment: Segmentation.Segment )=>void;
+		segmentSelected: ( segment: Segmentation.Segment )=>void;
 		groupedId: Segmentation.SegmentType;
 		openedEmailsId: Segmentation.SegmentType;
 		segmentCandidates: Segmentation.Response;
@@ -53,18 +51,9 @@ module Segmentation{
 				$scope.segmentCandidates = querySegments.get( $scope.segmentType, $scope.campaignId );
 			}
 
-			$scope.fieldSelected = function( key: string, segment: Segmentation.Segment ) {
+			$scope.segmentSelected = function( segment: Segmentation.Segment ) {
 				selected = segment;
 				console.log( 'Selected segment', selected );
-			}
-
-			$scope.broadcastSelected = function( key: string, segment: Segmentation.Segment ) {
-				selected = segment
-				console.log( selected );
-			}
-			$scope.followupSelected = function( key: string, segment: Segmentation.Segment ) {
-				selected = segment;
-				console.log( selected );
 			}
 
 			$scope.postSegment = function() {
