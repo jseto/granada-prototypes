@@ -11,7 +11,7 @@ var path = {
 	base: basePath,
 	client: basePath + '/client/',
 	outputFiles: basePath + '/client/out/',
-	typeDefinitions: basePath + '/' + tsd.path +'/', 				
+	typeDefinitions: basePath + '/' + tsd.path +'/',
 	customTsd: basePath + '/' + tsd.path + '/custom/',					// Generated TypeScript definition files
 	test: {
 		base: basePath + '/test/',
@@ -24,11 +24,11 @@ var path = {
 };
 
 var karmaPreprocessors = {};
-karmaPreprocessors[
-	path.test + '**/*.html',
-	path.client + 'segmentation/**/*.html'
-] = 'ng-html2js';
-karmaPreprocessors[ path.base + '/{client,client/!(bower_components)/**}/*.js' ] = 'coverage';
+	karmaPreprocessors[
+		path.test + '**/*.html',
+		path.client + 'segmentation/**/*.html'
+	] = 'ng-html2js';
+	karmaPreprocessors[ path.base + '/{client,client/!(bower_components)/**}/*.js' ] = 'coverage';
 
 module.exports = {
 	port: 3000,

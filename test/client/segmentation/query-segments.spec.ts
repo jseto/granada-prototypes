@@ -7,7 +7,7 @@ describe('Query segments service', function() {
 	var http: angular.IHttpBackendService;
 	var segmentEndPoint: string;
 	var querySegments: Segmentation.QuerySegments;
-	
+
 	var fieldsObj = {
         'fields': {
             'country': {'description': 'Pais'},
@@ -16,7 +16,7 @@ describe('Query segments service', function() {
             'company_type': {'description':'Tipo de empresa'}
         }
 	};
-	
+
 	var emailsObj = {
 		'followups': {
 			25: {campaign_id: 40, subject: 'Esto es un email', description:'#25 - Esto es un email', position: 1 },
@@ -25,24 +25,24 @@ describe('Query segments service', function() {
 		'broadcasts': {
 			12: {subject: 'Esto es un broadcast email', description:'#12 - Esto es un broadcast email', sent_at: '2015-02-02 00:00:00'},
 			14: {subject: 'Esto es un broadcast email mas', description:'#14 - Esto es un broadcast emailmas', sent_at: '2015-02-01 00:00:00'},
-		} 
+		}
 	}
-	
+
 	var fields: Segmentation.Grouped
 
 	beforeEach(()=>{
-		angular.mock.module('segmentation');		
+		angular.mock.module('segmentation');
 	});
-	
+
 	beforeEach( angular.mock.inject(( $httpBackend, _segmentEndPoint_, _querySegments_ ) => {
 		http = $httpBackend;
 		segmentEndPoint = _segmentEndPoint_;
 		querySegments = _querySegments_;
-	})); 
+	}));
 
 	afterEach(()=>{
 		http.verifyNoOutstandingExpectation();
-		http.verifyNoOutstandingRequest();	
+		http.verifyNoOutstandingRequest();
 	});
 
 	describe('when grouped query', function() {
@@ -57,12 +57,12 @@ describe('Query segments service', function() {
 			expect( querySegments.getSegmentCandidates().fields ).toBeDefined();
 			expect( querySegments.getSegmentCandidates().followups ).not.toBeDefined();
 			expect( querySegments.getSegmentCandidates().broadcasts ).not.toBeDefined();
-				
+
 			expect( querySegments.getSegmentCandidates().fields['country'].description ).toBe( 'Pais' );
 		});
-		
+
 		it('sould report segement type as grouped', function() {
-			expect( querySegments.segmentType() ).toBe( Segmentation.SegmentType.grouped );	
+			expect( querySegments.segmentType() ).toBe( Segmentation.SegmentType.grouped );
 		});
 	});
 
@@ -73,21 +73,21 @@ describe('Query segments service', function() {
 			querySegments.get( Segmentation.SegmentType.opened_emails );
 			http.flush();
 		});
-		
+
 		it('should report a collection of segment emails', function() {
 			expect( querySegments.getSegmentCandidates().fields ).not.toBeDefined();
 			expect( querySegments.getSegmentCandidates().followups ).toBeDefined();
 			expect( querySegments.getSegmentCandidates().broadcasts ).toBeDefined();
-			
+
 			expect( querySegments.getSegmentCandidates().followups[ 25 ].position ).toBe( 1 );
 			expect( querySegments.getSegmentCandidates().broadcasts[ 12 ].sent_at ).toBe( '2015-02-02 00:00:00' );
 		});
 
 		it('sould report segement type as opened_emails', function() {
-			expect( querySegments.segmentType() ).toBe( Segmentation.SegmentType.opened_emails );	
+			expect( querySegments.segmentType() ).toBe( Segmentation.SegmentType.opened_emails );
 		});
 	});
-	
+
 	describe('when post', function(){
 		it('should post grouped to server', function() {
 			http.expectPOST( segmentEndPoint, {
@@ -97,7 +97,7 @@ describe('Query segments service', function() {
 					field: 'country'
 				}
 			}).respond({});
-			
+
 			querySegments.post({
 				key: 'country',
 				option: 'field',
@@ -115,7 +115,7 @@ describe('Query segments service', function() {
 					broadcast: 12
 				}
 			}).respond({});
-			
+
 			querySegments.post({
 				key: 12,
 				option: 'broadcast',
@@ -133,7 +133,7 @@ describe('Query segments service', function() {
 					followup: 25
 				}
 			}).respond({});
-			
+
 			querySegments.post({
 				key: 25,
 				option: 'followup',
@@ -144,4 +144,3 @@ describe('Query segments service', function() {
 		});
 	})
 });
-

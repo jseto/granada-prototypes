@@ -1,45 +1,45 @@
 <div>
-	<input 
-		id="groupedRB"
-		type="radio" 
-		name="_askForSegment" 
+	<input
+		id="__test_groupedRB"
+		type="radio"
+		name="_askForSegment"
 		ng-model="segmentType"
-		ng-change="segmentTypeSelected()" 
+		ng-change="segmentTypeSelected()"
 		ng-value="groupedId"/>
 		{{groupedLabel}}
 	<br>
-	<input 
-		id="openedEmailId"
-		type="radio" 
-		name="_askForSegment" 
+	<input
+		id="__test_openedEmailRB"
+		type="radio"
+		name="_askForSegment"
 		ng-model="segmentType"
-		ng-change="segmentTypeSelected()" 
+		ng-change="segmentTypeSelected()"
 		ng-value="openedEmailsId"/>
-		{{openedEmailsLabel}} 
+		{{openedEmailsLabel}}
 	<br>
 	<label>{{selectCandidateLabel}}</label>
-	<ul>
-		<li 
+	<ul id="__test_all">
+		<li id="__test_fields"
 			ng-show="segmentType == groupedId"
-			ng-repeat="(key, segment) in segmentCandidates.fields" 
+			ng-repeat="(key, segment) in segmentCandidates.fields"
 			ng-click="fieldSelected( key, segment )"
 		>
 			<a href="">{{segment.description}}</a>
 		</li>
-		<ul ng-show="segmentType == openedEmailsId">
+		<ul id="__test_openedEmails" ng-show="segmentType == openedEmailsId">
 			<li>{{followupLabel}}</li>
-			<ul>
+			<ul id="__test_followups">
 				<li ng-repeat="(key, segment) in segmentCandidates.followups" ng-click="followupSelected( key, segment )">
 					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
 			<li>{{broadcastLabel}}</li>
-			<ul>
+			<ul id="__test_broadcasts">
 				<li ng-repeat="(key, segment) in segmentCandidates.broadcasts" ng-click="broadcastSelected( key, segment )">
 					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
 		</ul>
-	</ul> 
-	<button ng-click="postSegment()">{{postSegmentLabel}}</button>	
+	</ul>
+	<button ng-click="postSegment()">{{postSegmentLabel}}</button>
 </div>
