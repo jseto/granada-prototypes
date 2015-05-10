@@ -65,7 +65,6 @@ describe( 'Directive askForSegments', ()=>{
 		//lets grab the directive controller scope, so we can spy on internal directive methods
 		controller = element.controller()
 		directiveScope = <Segmentation.IAskForSegmentScope>( element.isolateScope() || element.scope() );
-
 	});
 
 	beforeEach(()=>{

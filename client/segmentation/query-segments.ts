@@ -46,27 +46,24 @@ module Segmentation {
 				this._response.broadcasts = [];
 
 				angular.forEach( data.fields, (value, key)=>{
-					this._response.fields.push({
+					this._response.fields.push( angular.extend( value, {
 						key: key,
-						option: 'field',
-						value: value
-					});
+						option: 'field'
+					}));
 				});
 
 				angular.forEach( data.followups, (value, key)=>{
-					this._response.followups.push({
+					this._response.followups.push( angular.extend( value, {
 						key: key,
-						option: 'followup',
-						value: value
-					});
+						option: 'followup'
+					}));
 				});
 
 				angular.forEach( data.broadcasts, (value, key)=>{
-					this._response.broadcasts.push({
+					this._response.broadcasts.push( angular.extend( value, {
 						key: key,
-						option: 'broadcast',
-						value: value
-					});
+						option: 'broadcast'
+					}));
 				});
 
 			});

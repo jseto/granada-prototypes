@@ -49,10 +49,9 @@ module Segmentation {
 		[ id: number ]: BroadcastEmail;
 	}
 
-	export interface Segment {
+	export interface Segment extends BackEndSegment {
 		campaign_id?: number;
 		key: any;
 		option: string;
-		value: BackEndSegment;
 	}
 }

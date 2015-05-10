@@ -24,19 +24,19 @@
 			ng-repeat="(key, segment) in segmentCandidates.fields"
 			ng-click="segmentSelected( segment )"
 		>
-			<a href="">{{segment.value.description}}</a>
+			<a href="">{{segment.description}}</a>
 		</li>
 		<ul id="__test_openedEmails" ng-show="segmentType == openedEmailsId">
 			<li>{{followupLabel}}</li>
 			<ul id="__test_followups">
 				<li ng-repeat="(key, segment) in segmentCandidates.followups" ng-click="segmentSelected( segment )">
-					<a href="">{{segment.value.description}}</a>
+					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
 			<li>{{broadcastLabel}}</li>
 			<ul id="__test_broadcasts">
 				<li ng-repeat="(key, segment) in segmentCandidates.broadcasts" ng-click="segmentSelected( segment )">
-					<a href="">{{segment.value.description}}</a>
+					<a href="">{{segment.description}}</a>
 				</li>
 			</ul>
 		</ul>

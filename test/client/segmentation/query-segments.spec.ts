@@ -58,7 +58,7 @@ describe('Query segments service', function() {
 			expect( querySegments.getSegmentCandidates().followups.length ).toBe( 0 );
 			expect( querySegments.getSegmentCandidates().broadcasts.length ).toBe( 0 );
 
-			expect( querySegments.getSegmentCandidates().fields[0].value.description ).toBe( 'Pais' );
+			expect( querySegments.getSegmentCandidates().fields[0].description ).toBe( 'Pais' );
 		});
 
 		it('sould report segement type as grouped', function() {
@@ -119,9 +119,7 @@ describe('Query segments service', function() {
 			querySegments.post({
 				key: 'country',
 				option: 'field',
-				value: {
-					description: 'I have nothing to declare'
-				}
+				description: 'I have nothing to declare'
 			}, Segmentation.SegmentType.grouped, 40 );
 			http.flush();
 		});
@@ -138,9 +136,7 @@ describe('Query segments service', function() {
 			querySegments.post({
 				key: 12,
 				option: 'broadcast',
-				value: {
-					description: 'I have nothing to declare'
-				}
+				description: 'I have nothing to declare'
 			}, Segmentation.SegmentType.opened_emails, 40 );
 			http.flush();
 		});
@@ -157,9 +153,7 @@ describe('Query segments service', function() {
 			querySegments.post({
 				key: 25,
 				option: 'followup',
-				value: {
-					description: 'I have nothing to declare'
-				}
+				description: 'I have nothing to declare'
 			}, Segmentation.SegmentType.opened_emails, 40 );
 			http.flush();
 		});
