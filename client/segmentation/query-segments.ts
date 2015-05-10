@@ -13,7 +13,7 @@ module Segmentation {
 		fields: Segment[];
 		followups: Segment[];
 		broadcasts: Segment[];
-		promise: angular.IPromise<Response>;
+		promise: angular.IHttpPromise<Response>;
 	}
 
 	export class QuerySegments {

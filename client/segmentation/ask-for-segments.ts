@@ -18,7 +18,7 @@ module Segmentation{
 		segmentTypeSelected: ()=>void;
 		segmentSelected: ( segment: Segmentation.Segment )=>void;
 		getOptionLabels: ( option: string ) => string;
-		selectedSegment: Segmentation.Segment;
+		model: any;//.selectedSegment: Segmentation.Segment;
 		groupedId: Segmentation.SegmentType;
 		openedEmailsId: Segmentation.SegmentType;
 		segmentCandidates: Segmentation.Response;
@@ -38,6 +38,7 @@ module Segmentation{
 		restrict = 'AC';
 
 		private controllerFn( $scope: IAskForSegmentScope, querySegments: QuerySegments ){
+			$scope.model = {};
 
 			$scope.segmentCandidates = new Response();
 
@@ -47,18 +48,23 @@ module Segmentation{
 			$scope.openedEmailsId = Segmentation.SegmentType.opened_emails;
 
 			$scope.segmentTypeSelected = function(){
-				$scope.selectedSegment = null;
+//				$scope.model.selectedSegment = null;
 
 				$scope.segmentCandidates = querySegments.get( $scope.segmentType, $scope.campaignId );
+				$scope.segmentCandidates.promise.then(( data )=>{
+					var someCandidates = data.data.fields || data.data.broadcasts || data.data.followups;
+					var firstSeg = someCandidates[Object.keys(someCandidates)[0]];
+					$scope.model.selectedSegment = firstSeg;
+				});
 			}
 
 			$scope.segmentSelected = function( segment: Segmentation.Segment ) {
-				$scope.selectedSegment = segment;
-				console.log( 'Selected segment', $scope.selectedSegment );
+				$scope.model.selectedSegment = segment;
+				console.log( 'Selected segment', $scope.model.selectedSegment );
 			}
 
 			$scope.postSegment = function() {
-				querySegments.post( $scope.selectedSegment, $scope.segmentType, $scope.campaignId );
+				querySegments.post( $scope.model.selectedSegment, $scope.segmentType, $scope.campaignId );
 			}
 
 			$scope.getOptionLabels = function( option: string ){

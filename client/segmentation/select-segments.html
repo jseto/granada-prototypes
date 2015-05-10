@@ -18,13 +18,13 @@
         {{openedEmailsLabel}}
     <br>
     <select
-        ng-model="selectedSegment"
+        ng-model="model.selectedSegment"
         ng-show="segmentType === groupedId"
-        ng-options=" segment.description for (key, segment) in segmentCandidates.fields">
+        ng-options="segment.description for (key, segment) in segmentCandidates.fields">
     </select>
 
     <select
-        ng-model="selectedSegment"
+        ng-model="model.selectedSegment"
         ng-show="segmentType == openedEmailsId"
         ng-options="segment.description group by getOptionLabels( segment.option ) for (key, segment) in segmentCandidates.followups.concat( segmentCandidates.broadcasts )">
     </select>
