@@ -10,6 +10,7 @@ module Segmentation{
 		followupLabel?: string;
 		broadcastLabel?: string;
 		postSegmentLabel?: string;
+		labels: string[];
 		campaignId: number;
 	};
 
@@ -59,6 +60,10 @@ module Segmentation{
 			$scope.postSegment = function() {
 				querySegments.post( selected, $scope.segmentType, $scope.campaignId );
 			}
+
+			$scope.labels = [];
+			$scope.labels['followup'] = $scope.followupLabel;
+			$scope.labels['broadcast'] = $scope.broadcastLabel;
 		}
 	}
 

@@ -1,0 +1,33 @@
+<div>
+    <input
+        id="__test_groupedRB"
+        type="radio"
+        name="_askForSegment"
+        ng-model="segmentType"
+        ng-change="segmentTypeSelected()"
+        ng-value="groupedId"/>
+        {{groupedLabel}}
+
+    <input
+        id="__test_openedEmailRB"
+        type="radio"
+        name="_askForSegment"
+        ng-model="segmentType"
+        ng-change="segmentTypeSelected()"
+        ng-value="openedEmailsId"/>
+        {{openedEmailsLabel}}
+    <br>
+    <select
+        ng-model="selected"
+        ng-show="segmentType === groupedId"
+        ng-options=" segment.description for (key, segment) in segmentCandidates.fields">
+    </select>
+
+    <select
+        ng-model="selected"
+        ng-show="segmentType == openedEmailsId"
+        ng-options="segment.description group by labels[ segment.option ] for (key, segment) in segmentCandidates.followups.concat( segmentCandidates.broadcasts )">
+    </select>
+    <br>
+    <button ng-click="postSegment()">{{postSegmentLabel}}</button>
+</div>

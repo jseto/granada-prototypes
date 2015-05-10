@@ -16,13 +16,6 @@ module Segmentation {
 		promise: angular.IPromise<Response>;
 	}
 
-
-	// export interface PostObject {
-	// 	key: any;
-	// 	option: string;
-	// 	segment: BackEndSegment;
-	// }
-
 	export class QuerySegments {
 		constructor( $http: angular.IHttpService, segmentEndPoint: string ) {
 			this._http = $http;
