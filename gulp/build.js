@@ -9,6 +9,7 @@ var ts = require('gulp-typescript');
 var merge = require('merge2');
 var dirname = require('path').dirname;
 var utils = require('./utils.js');
+var sourcemaps = require('gulp-sourcemaps');
 var path = project.path;
 
 var del = require('del');
@@ -24,6 +25,7 @@ var tsImpl = function(){
 		path.client + '**/*.ts',
 //		path.typeDefinitions + '**/*.d.ts',
 	])
+	.pipe(sourcemaps.init())
     .pipe( ts({
 		declarationFiles: true,
 		target: 'ES5'
@@ -31,30 +33,38 @@ var tsImpl = function(){
 
     return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
 //        tsResult.dts.pipe( gulp.dest( path.customTsd ) ),
-        tsResult.js.pipe( gulp.dest( path.outputFiles ) )
+        tsResult.js
+			.pipe( sourcemaps.write() )
+			.pipe( gulp.dest( path.outputFiles ) )
     ]);
 };
 
 var tsTest = function(){
     var tsResult = gulp.src([
-		path.test.base + '**/*.ts',
+		path.test.client + '**/*.ts',
 //		path.typeDefinitions + '**/*.d.ts',
 	])
+	.pipe(sourcemaps.init())
     .pipe( ts({
+		sortOutput: true,
 		target: 'ES5'
 	}) );
 
-    return tsResult.js.pipe( gulp.dest( path.test.outputFiles ) );
+    return tsResult.js
+		.pipe( sourcemaps.write() )
+		.pipe( gulp.dest( path.test.outputFiles ) );
 };
 
 var tsFile = function( filePath ) {
 	var isTestFile = filePath.indexOf( path.test.base ) >= 0;
 
 	return gulp.src( filePath )
+				.pipe(sourcemaps.init())
 				.pipe( ts({
 					declarationFiles: !isTestFile,
 					target: 'ES5'
 				}) )
+				.pipe( sourcemaps.write() )
 				.pipe( gulp.dest( outPath() ) );
 
 	function outPath() {

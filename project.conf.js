@@ -29,6 +29,10 @@ var karmaPreprocessors = {};
 		path.client + 'segmentation/**/*.html'
 	] = 'ng-html2js';
 	karmaPreprocessors[ path.base + '/{client,client/!(bower_components)/**}/*.js' ] = 'coverage';
+	karmaPreprocessors[
+		path.outputFiles + '**/*.js',
+		path.test.outputFiles + '**/*.js'
+	] = 'sourcemap';
 
 module.exports = {
 	port: 3000,
