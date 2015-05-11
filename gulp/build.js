@@ -26,10 +26,10 @@ var tsImpl = function(){
 	])
     .pipe( ts({
 		declarationFiles: true,
-		target: 'ES5'		
+		target: 'ES5'
 	}));
 
-    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done. 
+    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
 //        tsResult.dts.pipe( gulp.dest( path.customTsd ) ),
         tsResult.js.pipe( gulp.dest( path.outputFiles ) )
     ]);
@@ -48,12 +48,12 @@ var tsTest = function(){
 };
 
 var tsFile = function( filePath ) {
-	var isTestFile = filePath.indexOf( path.test.base ) >= 0; 
+	var isTestFile = filePath.indexOf( path.test.base ) >= 0;
 
 	return gulp.src( filePath )
 				.pipe( ts({
 					declarationFiles: !isTestFile,
-					target: 'ES5' 
+					target: 'ES5'
 				}) )
 				.pipe( gulp.dest( outPath() ) );
 
@@ -62,7 +62,7 @@ var tsFile = function( filePath ) {
 			return path.test.outputFiles + dirname( filePath.slice( path.test.base.length ) );
 		}
 		else {
-			return path.outputFiles + dirname( filePath.slice( path.client.length ) );		
+			return path.outputFiles + dirname( filePath.slice( path.client.length ) );
 		}
 	};
 };
@@ -82,7 +82,7 @@ gulp.task('watch:ts', ['ts'], function(){
 gulp.task('clean:ts', function( done ){
 	del( [
 		path.customTsd + '**',
-		path.outputFiles + '**',	
-		path.test.outputFiles + '**'	
+		path.outputFiles + '**',
+		path.test.outputFiles + '**'
 	], done )
 });
