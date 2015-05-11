@@ -38,7 +38,7 @@ gulp.task('pristine', ['clean'], function( done ){
 		git.on('close', function(code) {
 			gutil.log('Done with exit code', code);
 			done();
-		});        
+		});
 	});
 });
 
@@ -46,4 +46,4 @@ gulp.task( 'show:config', function(){
 	console.log( JSON.stringify( project, null, 2 ) );
 });
 
-gulp.task( 'postinstall', ['webdriver-update'] );
+gulp.task( 'postinstall', ['webdriver-update', 'ts'] );
