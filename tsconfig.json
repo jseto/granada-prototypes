@@ -24,13 +24,11 @@
         "./client/utils/class-helpers.ts",
         "./test/client/segmentation/ask-for-segments.spec.ts",
         "./test/client/segmentation/query-segments.spec.ts",
-        "./test/client/segmentation/segment.spec.ts",
         "./typings/angularjs/angular-mocks.d.ts",
         "./typings/angularjs/angular.d.ts",
         "./typings/gulp/gulp.d.ts",
         "./typings/jasmine/jasmine.d.ts",
         "./typings/jquery/jquery.d.ts",
-        "./typings/node/node.d.ts",
-        "./typings/tsd.d.ts"
+        "./typings/node/node.d.ts"
     ]
 }
