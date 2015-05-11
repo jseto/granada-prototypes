@@ -41,12 +41,11 @@ var tsImpl = function(){
 
 var tsTest = function(){
     var tsResult = gulp.src([
-		path.test.client + '**/*.ts',
+		path.test.base + '**/*.ts',
 //		path.typeDefinitions + '**/*.d.ts',
 	])
 	.pipe(sourcemaps.init())
     .pipe( ts({
-		sortOutput: true,
 		target: 'ES5'
 	}) );
 
